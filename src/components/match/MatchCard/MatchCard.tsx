@@ -129,7 +129,7 @@ const TeamName = styled.span<{ $align: 'left' | 'right' }>`
   text-align: ${({ $align }) => $align};
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
 
   ${media.md} {
     font-size: ${({ theme }) => theme.typography.fontSize.lg};
@@ -162,6 +162,10 @@ export function MatchCard({ match }: MatchCardProps) {
   const isLive = displayStatus === 'live';
   const statusBadgeText = getStatusBadgeText(displayStatus, match.timestamp);
 
+  const showZeroScore = displayStatus === 'cancelled' || displayStatus === 'prematch';
+  const homeScore = showZeroScore ? 0 : (match.homeScore.current ?? 0);
+  const awayScore = showZeroScore ? 0 : (match.awayScore.current ?? 0);
+
   return (
     <Card $isLive={isLive} data-testid="match-card">
       <Header>
@@ -172,9 +176,9 @@ export function MatchCard({ match }: MatchCardProps) {
 
       <ScoreSection>
         <ScoreContainer>
-          <Score>{match.homeScore.current}</Score>
+          <Score>{homeScore}</Score>
           <ScoreSeparator>-</ScoreSeparator>
-          <Score>{match.awayScore.current}</Score>
+          <Score>{awayScore}</Score>
         </ScoreContainer>
       </ScoreSection>
 

@@ -18,7 +18,7 @@ export interface Score {
   normaltime: number;
 }
 
-export type MatchStatusType = 'inprogress' | 'notstarted' | 'finished';
+export type MatchStatusType = 'inprogress' | 'notstarted' | 'finished' | 'canceled';
 
 export interface MatchStatus {
   code: number;

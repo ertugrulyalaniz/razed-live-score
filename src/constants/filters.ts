@@ -11,6 +11,7 @@ export const STATUS_TYPE_TO_FILTER: Record<MatchStatusType, Exclude<FilterType, 
   finished: 'result',
   inprogress: 'live',
   notstarted: 'upcoming',
+  canceled: 'result',
 };
 
 export const FILTER_TO_STATUS_TYPE: Record<Exclude<FilterType, 'all'>, MatchStatusType> = {

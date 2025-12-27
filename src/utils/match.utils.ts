@@ -4,7 +4,11 @@ import type { FilterCounts, FilterType, Match, MatchDisplayStatus, MatchStatusTy
 export function getMatchDisplayStatus(match: Match): MatchDisplayStatus {
   const { status, liveStatus } = match;
 
-  if (liveStatus === 'Cancelled') {
+  if (liveStatus === 'Cancelled' || liveStatus === 'Canceled') {
+    return 'cancelled';
+  }
+
+  if (status.type === 'canceled') {
     return 'cancelled';
   }
 
@@ -27,7 +31,7 @@ export function isMatchLive(match: Match): boolean {
 }
 
 export function getLiveMinute(liveStatus: string): string | null {
-  const nonMinuteStatuses = ['FT', 'HT', '-', 'Cancelled'];
+  const nonMinuteStatuses = ['FT', 'HT', '-', 'Cancelled', 'Canceled'];
 
   if (nonMinuteStatuses.includes(liveStatus)) {
     return null;

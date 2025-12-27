@@ -5,7 +5,7 @@ import { media } from '@/styles';
 
 const StyledContainer = styled.div`
   width: 100%;
-  max-width: 1280px;
+  max-width: 1920px;
   margin: 0 auto;
   padding: ${({ theme }) => theme.spacing[4]};
 
