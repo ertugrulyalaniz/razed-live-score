@@ -67,9 +67,9 @@ const StatusBadge = styled.span<{ $status: string }>`
         return css`
           color: ${theme.colors.status.finished};
         `;
-      case 'cancelled':
+      case 'canceled':
         return css`
-          color: ${theme.colors.status.cancelled};
+          color: ${theme.colors.status.canceled};
         `;
       default:
         return css`
@@ -142,8 +142,8 @@ function getStatusBadgeText(status: ReturnType<typeof getMatchDisplayStatus>, ti
       return 'LIVE';
     case 'finished':
       return 'ENDED';
-    case 'cancelled':
-      return 'CANCELLED';
+    case 'canceled':
+      return 'CANCELED';
     case 'halftime':
       return 'HALF TIME';
     default: {
@@ -162,7 +162,7 @@ export function MatchCard({ match }: MatchCardProps) {
   const isLive = displayStatus === 'live';
   const statusBadgeText = getStatusBadgeText(displayStatus, match.timestamp);
 
-  const showZeroScore = displayStatus === 'cancelled' || displayStatus === 'prematch';
+  const showZeroScore = displayStatus === 'canceled' || displayStatus === 'prematch';
   const homeScore = showZeroScore ? 0 : (match.homeScore.current ?? 0);
   const awayScore = showZeroScore ? 0 : (match.awayScore.current ?? 0);
 

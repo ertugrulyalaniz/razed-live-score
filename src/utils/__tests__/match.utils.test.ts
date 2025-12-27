@@ -8,7 +8,7 @@ import {
   sortMatches,
 } from '../match.utils';
 import {
-  createCancelledMatch,
+  createCanceledMatch,
   createFinishedMatch,
   createHalftimeMatch,
   createLiveMatch,
@@ -18,9 +18,9 @@ import {
 } from '@/test/mocks/match.mock';
 
 describe('getMatchDisplayStatus', () => {
-  it('returns "cancelled" when liveStatus is "Cancelled"', () => {
-    const match = createCancelledMatch();
-    expect(getMatchDisplayStatus(match)).toBe('cancelled');
+  it('returns "canceled" when liveStatus is "Canceled"', () => {
+    const match = createCanceledMatch();
+    expect(getMatchDisplayStatus(match)).toBe('canceled');
   });
 
   it('returns "halftime" when liveStatus is "HT"', () => {
@@ -43,9 +43,9 @@ describe('getMatchDisplayStatus', () => {
     expect(getMatchDisplayStatus(match)).toBe('prematch');
   });
 
-  it('returns "cancelled" over any status type when liveStatus is "Cancelled"', () => {
-    const match = createMatchWithStatus('inprogress', 'Cancelled');
-    expect(getMatchDisplayStatus(match)).toBe('cancelled');
+  it('returns "canceled" over any status type when liveStatus is "Canceled"', () => {
+    const match = createMatchWithStatus('inprogress', 'Canceled');
+    expect(getMatchDisplayStatus(match)).toBe('canceled');
   });
 });
 
@@ -70,8 +70,8 @@ describe('isMatchLive', () => {
     expect(isMatchLive(match)).toBe(false);
   });
 
-  it('returns false for cancelled match', () => {
-    const match = createCancelledMatch();
+  it('returns false for canceled match', () => {
+    const match = createCanceledMatch();
     expect(isMatchLive(match)).toBe(false);
   });
 });
@@ -89,8 +89,8 @@ describe('getLiveMinute', () => {
     expect(getLiveMinute('-')).toBeNull();
   });
 
-  it('returns null for "Cancelled"', () => {
-    expect(getLiveMinute('Cancelled')).toBeNull();
+  it('returns null for "Canceled"', () => {
+    expect(getLiveMinute('Canceled')).toBeNull();
   });
 
   it('returns the minute string for "45\'"', () => {
@@ -151,10 +151,10 @@ describe('calculateFilterCounts', () => {
     const matches = [
       createPrematchMatch(),
       createPrematchMatch(),
-      createCancelledMatch(), // notstarted type
+      createCanceledMatch(), // canceled type
     ];
     const counts = calculateFilterCounts(matches);
-    expect(counts.upcoming).toBe(3);
+    expect(counts.upcoming).toBe(2);
   });
 
   it('handles mixed match types', () => {
@@ -163,14 +163,14 @@ describe('calculateFilterCounts', () => {
       createHalftimeMatch(), // inprogress
       createFinishedMatch(),
       createPrematchMatch(),
-      createCancelledMatch(),
+      createCanceledMatch(),
     ];
     const counts = calculateFilterCounts(matches);
     expect(counts).toEqual({
       all: 5,
       live: 2, // live + halftime (both inprogress)
-      result: 1,
-      upcoming: 2, // prematch + cancelled (both notstarted)
+      result: 2, // finished + canceled
+      upcoming: 1, // prematch only
     });
   });
 });
@@ -180,7 +180,7 @@ describe('filterMatches', () => {
     createLiveMatch(),
     createFinishedMatch(),
     createPrematchMatch(),
-    createCancelledMatch(),
+    createCanceledMatch(),
   ];
 
   it('returns all matches for "all" filter', () => {
@@ -195,18 +195,18 @@ describe('filterMatches', () => {
     expect(filtered[0].status.type).toBe('inprogress');
   });
 
-  it('returns only finished matches for "result" filter', () => {
+  it('returns only finished and canceled matches for "result" filter', () => {
     const filtered = filterMatches(matches, 'result');
-    expect(filtered).toHaveLength(1);
-    expect(filtered[0].status.type).toBe('finished');
+    expect(filtered).toHaveLength(2); // finished + canceled
+    for (const match of filtered) {
+      expect(['finished', 'canceled']).toContain(match.status.type);
+    }
   });
 
   it('returns only upcoming matches for "upcoming" filter', () => {
     const filtered = filterMatches(matches, 'upcoming');
-    expect(filtered).toHaveLength(2); // prematch + cancelled
-    for (const match of filtered) {
-      expect(match.status.type).toBe('notstarted');
-    }
+    expect(filtered).toHaveLength(1); // prematch only
+    expect(filtered[0].status.type).toBe('notstarted');
   });
 
   it('returns empty array when no matches match filter', () => {

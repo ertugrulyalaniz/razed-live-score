@@ -78,9 +78,16 @@ describe('FILTER_TO_STATUS_TYPE', () => {
 });
 
 describe('bidirectional mapping', () => {
-  it('STATUS_TYPE_TO_FILTER and FILTER_TO_STATUS_TYPE are inverse mappings', () => {
-    for (const [status, filter] of Object.entries(STATUS_TYPE_TO_FILTER)) {
+  it('STATUS_TYPE_TO_FILTER and FILTER_TO_STATUS_TYPE are inverse mappings for primary types', () => {
+    // Skip 'canceled' as it maps to 'result' but 'result' maps back to 'finished'
+    const primaryStatusTypes = ['finished', 'inprogress', 'notstarted'] as const;
+    for (const status of primaryStatusTypes) {
+      const filter = STATUS_TYPE_TO_FILTER[status];
       expect(FILTER_TO_STATUS_TYPE[filter as keyof typeof FILTER_TO_STATUS_TYPE]).toBe(status);
     }
+  });
+
+  it('maps canceled status to result filter', () => {
+    expect(STATUS_TYPE_TO_FILTER.canceled).toBe('result');
   });
 });

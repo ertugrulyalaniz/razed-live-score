@@ -75,11 +75,11 @@ export function createHalftimeMatch(): Match {
   });
 }
 
-export function createCancelledMatch(): Match {
+export function createCanceledMatch(): Match {
   return createMockMatch({
-    id: 'cancelled-match',
-    status: { code: 100, type: 'notstarted' },
-    liveStatus: 'Cancelled',
+    id: 'canceled-match',
+    status: { code: 100, type: 'canceled' },
+    liveStatus: 'Canceled',
   });
 }
 
@@ -109,7 +109,7 @@ export function createMatchList(): Match[] {
     createHalftimeMatch(),
     createFinishedMatch(),
     createPrematchMatch(),
-    createCancelledMatch(),
+    createCanceledMatch(),
   ];
 }
 
@@ -118,5 +118,5 @@ export const mockDisplayStatuses: Record<MatchDisplayStatus, Match> = {
   halftime: createHalftimeMatch(),
   finished: createFinishedMatch(),
   prematch: createPrematchMatch(),
-  cancelled: createCancelledMatch(),
+  canceled: createCanceledMatch(),
 };

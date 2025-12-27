@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render, screen } from '@/test/test-utils';
 import { MatchCard } from '../MatchCard';
 import {
-  createCancelledMatch,
+  createCanceledMatch,
   createFinishedMatch,
   createHalftimeMatch,
   createLiveMatch,
@@ -116,17 +116,17 @@ describe('MatchCard', () => {
     });
   });
 
-  describe('cancelled match', () => {
-    it('displays CANCELLED status badge', () => {
-      const match = createCancelledMatch();
+  describe('canceled match', () => {
+    it('displays CANCELED status badge', () => {
+      const match = createCanceledMatch();
       render(<MatchCard match={match} />);
-      expect(screen.getByText('CANCELLED')).toBeInTheDocument();
+      expect(screen.getByText('CANCELED')).toBeInTheDocument();
     });
 
-    it('renders cancelled status indicator', () => {
-      const match = createCancelledMatch();
+    it('renders canceled status indicator', () => {
+      const match = createCanceledMatch();
       render(<MatchCard match={match} />);
-      expect(screen.getByTestId('status-cancelled')).toBeInTheDocument();
+      expect(screen.getByTestId('status-canceled')).toBeInTheDocument();
     });
   });
 

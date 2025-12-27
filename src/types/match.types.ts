@@ -48,4 +48,4 @@ export interface Match {
   liveStatus: LiveStatus;
 }
 
-export type MatchDisplayStatus = 'live' | 'prematch' | 'finished' | 'halftime' | 'cancelled';
+export type MatchDisplayStatus = 'live' | 'prematch' | 'finished' | 'halftime' | 'canceled';

@@ -17,7 +17,7 @@ export const designTokens = {
       finished: '#4ade80',
       halftime: '#fbbf24',
       upcoming: '#8a8a8a',
-      cancelled: '#e07777',
+      canceled: '#e07777',
     },
     ui: {
       border: '#6a6a6a',

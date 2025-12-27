@@ -52,10 +52,10 @@ describe('StatusIndicator', () => {
     });
   });
 
-  describe('cancelled status', () => {
-    it('renders cancelled indicator', () => {
-      render(<StatusIndicator status="cancelled" />);
-      const indicator = screen.getByTestId('status-cancelled');
+  describe('canceled status', () => {
+    it('renders canceled indicator', () => {
+      render(<StatusIndicator status="canceled" />);
+      const indicator = screen.getByTestId('status-canceled');
       expect(indicator).toBeInTheDocument();
     });
   });

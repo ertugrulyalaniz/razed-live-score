@@ -5,11 +5,11 @@ export function getMatchDisplayStatus(match: Match): MatchDisplayStatus {
   const { status, liveStatus } = match;
 
   if (liveStatus === 'Cancelled' || liveStatus === 'Canceled') {
-    return 'cancelled';
+    return 'canceled';
   }
 
   if (status.type === 'canceled') {
-    return 'cancelled';
+    return 'canceled';
   }
 
   if (liveStatus === 'HT') {
@@ -65,6 +65,14 @@ export function filterMatches(matches: Match[], filter: FilterType): Match[] {
   }
 
   const targetStatusType: MatchStatusType = FILTER_TO_STATUS_TYPE[filter];
+
+  // Result filter should include both finished and canceled matches
+  if (filter === 'result') {
+    return matches.filter((match) =>
+      match.status.type === 'finished' || match.status.type === 'canceled'
+    );
+  }
+
   return matches.filter((match) => match.status.type === targetStatusType);
 }
 

@@ -129,9 +129,9 @@ export function StatusIndicator({ status, liveMinute }: StatusIndicatorProps) {
         </Container>
       );
 
-    case 'cancelled':
+    case 'canceled':
       return (
-        <Container data-testid="status-cancelled">
+        <Container data-testid="status-canceled">
           <EmptyCircle />
         </Container>
       );
